@@ -1,12 +1,17 @@
 import React from 'react';
-import TextInputs from './components/TextInputs';
-// import Keyboard from './components/Keyboard';
+import Navbar from './containers/Navbar/Navbar'
+
+
+
 
 function App() {
+
   return (
     <div>
-        <TextInputs numInputsPerLine={5} numLines={9}/>
-        {/* <Keyboard onInput={this.handleInput} onEnter={this.handleEnter} onDelete={this.handleDelete} /> */}
+      <Navbar/>
+      <menu type="toolbar"><a href="http://"></a></menu>
+      <menu>f</menu>
+      <h1>Hi</h1>
     </div>
   );
 }

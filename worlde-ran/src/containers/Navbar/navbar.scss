@@ -1,0 +1,64 @@
+$primary-color: #333;
+$secondary-color: #ccc;
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $primary-color;
+  color: #fff;
+  padding: 0.5rem 1rem;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-item {
+  margin-left: 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  &:hover {
+    color: $secondary-color;
+  }
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.login-button {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  &:hover {
+    color: $secondary-color;
+  }
+}
+
+.dark-mode-toggle {
+  display: none;
+}
+
+.user-name {
+  margin-right: 1rem;
+}
+
+@media (max-width: 500px) {
+  .navbar-right {
+    display: none;
+  }
+  .dark-mode-toggle {
+    display: inline-block;
+  }
+}
