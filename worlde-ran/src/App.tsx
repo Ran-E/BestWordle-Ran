@@ -1,20 +1,13 @@
-import React from 'react';
-import Navbar from './containers/Navbar/Navbar'
-
-
-
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import Root from "./routes/root/root";
 
 function App() {
-
   return (
-    <div>
-      <Navbar/>
-      <menu type="toolbar"><a href="http://"></a></menu>
-      <menu>f</menu>
-      <h1>Hi</h1>
-    </div>
+    <Routes>
+      <Route path="/" element={<Root />} />
+    </Routes>
   );
 }
-
 
 export default App;
