@@ -1,12 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
-import '../styles/TextInputGrid.scss';
+import React, { useEffect, useRef, useState } from "react";
+import "../components/TextInputGrid.scss";
+import { any } from "prop-types";
 
-type Inputs = {
+interface Inputs {
   [key: string]: string;
 }
 
-export const TextInputs = (props: { numLines: number, numInputsPerLine: number }) => {
+export const TextInputs = (props: {
+  numLines: number;
+  numInputsPerLine: number;
+}) => {
   const [inputs, setInputs] = useState<Inputs>({});
+
   const inputRefs = useRef<HTMLInputElement[]>([]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,14 +22,14 @@ export const TextInputs = (props: { numLines: number, numInputsPerLine: number }
     setInputs({ ...inputs, [name]: value });
   };
 
-  useEffect(()=>{
-    if(inputRefs.current[0].value === ""){
-      inputRefs.current[0].focus()
+  useEffect(() => {
+    if (inputRefs.current[0].value === "") {
+      inputRefs.current[0].focus();
     }
-  })
+  });
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       return;
     }
     const currentIndex = parseInt(event.currentTarget.name, 10);
@@ -35,30 +40,28 @@ export const TextInputs = (props: { numLines: number, numInputsPerLine: number }
     inputRefs.current[nextIndex].focus();
   };
 
-
   return (
     <>
-    <div className='mainGrid'>
-      {[...Array(props.numLines)].map((_, index) => (
-        <div key={index} id={'playGrid'+index} className='playGrid'>
-          {[...Array(props.numInputsPerLine)].map((_, inputIndex) => {
-            const inputName = index * props.numInputsPerLine + inputIndex;
-            return (
-              <input
-                key={inputName}
-                name={inputName.toString()}
-                // ref={(input) => inputRefs.current[inputName] = input}
-                value={inputs[inputName.toString()] || ''}
-                onChange={handleChange}
-                onKeyUp={handleKeyDown}
-              />
-            );
-          })}
-        </div>
-      ))}
-    </div>
+      <div className="mainGrid">
+        {[...Array(props.numLines)].map((_, index) => (
+          <div key={index} id={"playGrid" + index} className="playGrid">
+            {[...Array(props.numInputsPerLine)].map((_, inputIndex) => {
+              const inputName = index * props.numInputsPerLine + inputIndex;
+              return (
+                <input
+                  key={inputName}
+                  name={inputName.toString()}
+                  ref={(input) => (inputRefs.current[inputName] = input)}
+                  value={inputs[inputName.toString()] || ""}
+                  onChange={handleChange}
+                  onKeyUp={handleKeyDown}
+                />
+              );
+            })}
+          </div>
+        ))}
+      </div>
     </>
-
   );
 };
 

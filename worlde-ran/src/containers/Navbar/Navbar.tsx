@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import '../Navbar/navbar.scss';
-import Help from '../Help/Help';
-
+import React, { useState } from "react";
+import "../Navbar/navbar.scss";
+import Help from "../Help/Help";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -17,7 +16,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`navbar${isDarkMode ? ' bg-gray-800' : ''}`}>
+    <nav className={`navbar${isDarkMode ? " bg-gray-800" : ""}`}>
       <div className="navbar-left">
         <span className="logo">My App</span>
         {isLoggedIn && (
@@ -26,10 +25,7 @@ const Navbar = () => {
       </div>
       <div className="navbar-right">
         {isLoggedIn ? (
-          <button
-            className="login-button"
-            onClick={() => setIsLoggedIn(false)}
-          >
+          <button className="login-button" onClick={() => setIsLoggedIn(false)}>
             Logout
           </button>
         ) : (
@@ -45,19 +41,21 @@ const Navbar = () => {
         <span className="navbar-item" onClick={toggleHelpModal}>
           Help
         </span>
-        <label htmlFor="dark-mode-toggle" className="dark-mode-toggle navbar-item">
+        <label
+          htmlFor="dark-mode-toggle"
+          className="dark-mode-toggle navbar-item"
+        >
           <input
             type="checkbox"
             id="dark-mode-toggle"
             onChange={toggleDarkMode}
             checked={isDarkMode}
-          />{' '}
+          />{" "}
           Dark mode
         </label>
       </div>
       {showHelpModal && <Help onClose={toggleHelpModal} />}
     </nav>
   );
-        };
+};
 export default Navbar;
- 

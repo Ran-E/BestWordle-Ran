@@ -19,7 +19,7 @@ const Login = (props: Props) => {
 
   const handleLogin = () => {
     // code to check if username and password are valid
-    if (!username && !password) {
+    if (username && password) {
       setUser({ username, password });
       setIsLoggedIn(true);
       props.handleSuccessfulLogin(username);
