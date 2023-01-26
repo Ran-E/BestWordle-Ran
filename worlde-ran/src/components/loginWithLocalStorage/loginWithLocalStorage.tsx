@@ -1,5 +1,6 @@
 import "./loginWithLocalStorage.scss";
 import React, { useState } from "react";
+import { type } from "os";
 
 interface Props {
   handleSuccessfulLogin: (username: string) => void;

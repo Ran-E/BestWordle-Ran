@@ -5,7 +5,7 @@ interface Props {
   onClose: () => void;
 }
 
-const Modal = ({ onClose }: Props) => {
+const Modald = ({ onClose }: Props) => {
   return (
     <div className="modal-overlay">
       <div className="modal-container">
@@ -27,4 +27,4 @@ const Modal = ({ onClose }: Props) => {
   );
 };
 
-export default Modal;
+export default Modald;

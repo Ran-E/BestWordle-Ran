@@ -16,7 +16,7 @@ import Navbar from "../../containers/Navbar/Navbar";
 //   console.log("Delete button clicked");
 // };
 
-export default function Welcome() {
+export default function Game() {
   return (
     <div>
       <Navbar />
