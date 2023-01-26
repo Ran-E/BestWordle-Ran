@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import { useNavigate } from "react-router-dom";
 import "./Main.scss";
 import { useState } from "react";
-import LoginM from "../../containers/logForm/loginModal";
+import LoginM from "../../containers/loginModal/loginModal";
 
 export default function Main() {
   const [showLogin, setShowLogin] = useState(false);
@@ -20,7 +20,7 @@ export default function Main() {
         <h1>Welcome Guest</h1>
         <div>
           <Button className="m-3" onClick={() => setShowLogin(true)}>
-            Open Modal
+            Login
           </Button>
           <LoginM show={showLogin} close={() => setShowLogin(false)} />
           <Button onClick={() => navigateToGame()}>Enter as guest</Button>

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 import TextInputs from "../../components/TextInputs";
-// import Navbar from "../../containers/Navbar/Navbar";
-import Navbar from "../../containers/Header/header";
+import Navbar from "../../containers/Navbar/Navbar";
+// import Navbar from "../../containers/Header/header";
 // import Keyboard from './containers/keyboard/Keyboard';
 
 // const handleInput = (input: string) => {

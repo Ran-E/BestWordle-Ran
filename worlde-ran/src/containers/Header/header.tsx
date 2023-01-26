@@ -57,7 +57,7 @@ const Header = () => {
             />
           </Form>
 
-          <Dropdown alignRight>
+          <Dropdown>
             <Dropdown.Toggle variant="link" id="dropdown-basic">
               <img
                 src="https://github.com/mdo.png"
