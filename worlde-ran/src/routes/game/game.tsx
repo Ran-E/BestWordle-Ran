@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
 import TextInputs from "../../components/TextInputs";
-import Navbar from "../../containers/Navbar/Navbar";
+// import Navbar from "../../containers/Navbar/Navbar";
+import Navbar from "../../containers/Header/header";
 // import Keyboard from './containers/keyboard/Keyboard';
 
 // const handleInput = (input: string) => {
@@ -20,7 +21,6 @@ export default function Game() {
   return (
     <div>
       <Navbar />
-      <h1>2</h1>
       <TextInputs numInputsPerLine={5} numLines={9} />
       {/* <Keyboard
         onInput={handleInput}

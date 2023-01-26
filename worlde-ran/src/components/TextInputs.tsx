@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../components/TextInputGrid.scss";
-import { any } from "prop-types";
 
 interface Inputs {
   [key: string]: string;
@@ -51,7 +50,7 @@ export const TextInputs = (props: {
                 <input
                   key={inputName}
                   name={inputName.toString()}
-                  ref={(input) => (inputRefs.current[inputName] = input)}
+                  // ref={(input) => (inputRefs.current[inputName] = input)}
                   value={inputs[inputName.toString()] || ""}
                   onChange={handleChange}
                   onKeyUp={handleKeyDown}

@@ -1,5 +1,5 @@
-import React from 'react';
-import '../Help/help.scss';
+import React from "react";
+import "../Help/help.scss";
 
 interface Props {
   onClose: () => void;
