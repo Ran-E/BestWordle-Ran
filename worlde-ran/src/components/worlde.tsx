@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
-type Props = {
+interface Props {
   word: string;
   numberOfLines: number;
   numberOfInputs: number;
-};
+}
 
-const Wordle: React.FC<Props> = ({ word, numberOfLines, numberOfInputs }) => {
+const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
   const [inputs, setInputs] = useState<string[][]>(
     Array(numberOfLines)
       .fill(null)
@@ -69,6 +69,7 @@ const Wordle: React.FC<Props> = ({ word, numberOfLines, numberOfInputs }) => {
               key={j}
               type="text"
               value={input}
+              maxLength={1}
               onChange={(e) => handleChange(e, i, j)}
               style={{ backgroundColor: color[i][j] }}
             />
