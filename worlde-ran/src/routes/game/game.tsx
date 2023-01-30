@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
 import Worlde from "../../components/worlde";
-// import Navbar from "../../containers/Navbar/Navbar";
-import Navbar from "../../containers/Header/header";
+// import Navbar from "../../containers/Header/header";
 // import Keyboard from './containers/keyboard/Keyboard';
+import Navbar from "../../containers/Header/Nav";
 
 export default function Game() {
   return (

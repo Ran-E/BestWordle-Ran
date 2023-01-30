@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Nav, Form } from "react-bootstrap";
+
+import Help from "../Help/Help";
+
 import "./headers.css";
 
 const Header = () => {
@@ -25,37 +28,9 @@ const Header = () => {
 
           <Nav className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <Nav.Item>
-              <Link to="#" className="nav-link px-2 link-secondary">
-                Overview
-              </Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Link to="#" className="nav-link px-2 link-dark">
-                Inventory
-              </Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Link to="#" className="nav-link px-2 link-dark">
-                Customers
-              </Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Link to="#" className="nav-link px-2 link-dark">
-                Products
-              </Link>
+              <Help />
             </Nav.Item>
           </Nav>
-
-          <Form
-            className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
-            role="search"
-          >
-            <Form.Control
-              type="search"
-              placeholder="Search..."
-              aria-label="Search"
-            />
-          </Form>
 
           <Dropdown>
             <Dropdown.Toggle variant="link" id="dropdown-basic">
