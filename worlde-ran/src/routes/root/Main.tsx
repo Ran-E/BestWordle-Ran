@@ -23,6 +23,11 @@ export default function Main() {
     setOff((current) => !current);
   };
 
+  const logIn = () => {
+    setShowLogin(false);
+    navigateToGame();
+  };
+
   return (
     <>
       <Container className="container-fluid">
@@ -40,7 +45,7 @@ export default function Main() {
                 <Button className="m-3" onClick={() => setShowLogin(true)}>
                   Login
                 </Button>
-                <LoginM show={showLogin} close={() => setShowLogin(false)} />
+                <LoginM show={showLogin} close={logIn} />
                 <Button onClick={() => navigateToGame()}>Enter as guest</Button>
               </>
             </>
