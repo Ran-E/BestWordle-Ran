@@ -44,7 +44,6 @@ export default function Main() {
           )}
         </div>
       </Container>
-      <footer>Copyright &copy; 2023 Ran Elbaz</footer>
     </>
   );
 }

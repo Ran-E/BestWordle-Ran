@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./wordle.scss";
 
 interface Props {
   word: string;

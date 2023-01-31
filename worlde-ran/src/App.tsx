@@ -7,11 +7,14 @@ import Login from "./containers/loginModal/loginModal";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Main />} />
-      <Route path="/game" element={<Game />} />
-      <Route path="/login" element={<Login />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/game" element={<Game />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+      <footer>Copyright &copy; 2023 Ran Elbaz</footer>
+    </>
   );
 }
 

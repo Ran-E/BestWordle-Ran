@@ -1,5 +1,7 @@
+import React from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
+import Help from "../Help/Help";
 
 function TextLinkExample() {
   return (
@@ -7,6 +9,7 @@ function TextLinkExample() {
       <Container>
         <Navbar.Brand href="#home">Navbar with text</Navbar.Brand>
         <Navbar.Toggle />
+        <Help />
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
             Signed in as: <a href="#login">Mark Otto</a>
