@@ -3,7 +3,6 @@ import "./game.scss";
 import Worlde from "../../components/the game/worlde";
 import Navbar from "../../containers/Header/header";
 import Keyboard from "../../containers/keyboard/keyboard";
-// import Navbar from "../../containers/Header/Nav";
 
 export default function Game() {
   return (
