@@ -10,6 +10,7 @@ export default function Main() {
   const email = localStorage.getItem("email");
 
   const [showLogin, setShowLogin] = useState(false);
+  const [off, setOff] = useState(true);
 
   const navigate = useNavigate();
 
@@ -19,7 +20,7 @@ export default function Main() {
 
   const logOut = () => {
     localStorage.clear();
-    window.location.reload();
+    setOff((current) => !current);
   };
 
   return (
@@ -38,7 +39,10 @@ export default function Main() {
               <Button className="m-3" onClick={() => setShowLogin(true)}>
                 Login
               </Button>
-              <LoginM show={showLogin} close={() => setShowLogin(false)} />
+              <LoginM
+                show={showLogin}
+                close={(showLogin) => setShowLogin(false)}
+              />
               <Button onClick={() => navigateToGame()}>Enter as guest</Button>
             </>
           )}

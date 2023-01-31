@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import "./wordle.scss";
 
 interface Props {
@@ -22,7 +22,7 @@ const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
   );
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: ChangeEvent<HTMLInputElement>,
     row: number,
     col: number
   ) => {
@@ -34,10 +34,17 @@ const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
     });
     setInputs(updatedInputs);
 
+    const currentWord = inputs[row].join("");
+    if (currentWord === word) {
+      // stop here if the entire word is green
+      return;
+    }
+
     if (col === numberOfInputs - 1) {
       setCurrentRow(row + 1);
       setCurrentCol(0);
     } else {
+      setCurrentRow(row);
       setCurrentCol(col + 1);
     }
 
@@ -59,6 +66,10 @@ const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
       return colorRow;
     });
     setColor(updatedColor);
+
+    document
+      .getElementsByTagName("input")
+      [row * numberOfInputs + col + 1].focus();
   };
 
   return (

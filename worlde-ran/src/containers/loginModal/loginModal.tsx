@@ -10,7 +10,7 @@ const LoginForm = (props: any) => {
     const password = e.target.elements.password.value;
     localStorage.setItem("email", email);
     localStorage.setItem("password", password);
-    close();
+    props.close();
   };
 
   return (
