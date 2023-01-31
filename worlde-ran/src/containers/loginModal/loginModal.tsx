@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 
 const LoginForm = (props: any) => {
   const handleSubmit = (e: any) => {
@@ -10,16 +10,11 @@ const LoginForm = (props: any) => {
     const password = e.target.elements.password.value;
     localStorage.setItem("email", email);
     localStorage.setItem("password", password);
-    props.close();
+    close();
   };
 
   return (
-    <Modal
-      show={props.show}
-      onHide={props.close}
-      backdrop="static"
-      keyboard={false}
-    >
+    <Modal show={props.show} onHide={close} backdrop="static" keyboard={false}>
       <Modal.Header closeButton className="p-5 pb-4 border-bottom-0">
         <h1 className="fw-bold mb-0 fs-2">Sign up for free</h1>
       </Modal.Header>
