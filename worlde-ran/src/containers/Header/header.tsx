@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -26,7 +26,11 @@ const Header = () => {
             <Nav.Item id="h1">Welcome, {email ? email : "Guest"}!</Nav.Item>
             <div>
               {email ? (
-                <Button className="m-3" onClick={logOut}>
+                <Button
+                  variant="#0038b8"
+                  className="text-white"
+                  onClick={logOut}
+                >
                   Logout
                 </Button>
               ) : (
