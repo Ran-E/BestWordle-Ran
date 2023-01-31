@@ -40,10 +40,7 @@ export default function Main() {
                 <Button className="m-3" onClick={() => setShowLogin(true)}>
                   Login
                 </Button>
-                <LoginM
-                  show={showLogin}
-                  close={(showLogin) => setShowLogin(false)}
-                />
+                <LoginM show={showLogin} close={() => setShowLogin(false)} />
                 <Button onClick={() => navigateToGame()}>Enter as guest</Button>
               </>
             </>
