@@ -36,18 +36,21 @@ export default function Main() {
             </>
           ) : (
             <>
-              <Button className="m-3" onClick={() => setShowLogin(true)}>
-                Login
-              </Button>
-              <LoginM
-                show={showLogin}
-                close={(showLogin) => setShowLogin(false)}
-              />
-              <Button onClick={() => navigateToGame()}>Enter as guest</Button>
+              <>
+                <Button className="m-3" onClick={() => setShowLogin(true)}>
+                  Login
+                </Button>
+                <LoginM
+                  show={showLogin}
+                  close={(showLogin) => setShowLogin(false)}
+                />
+                <Button onClick={() => navigateToGame()}>Enter as guest</Button>
+              </>
             </>
           )}
         </div>
       </Container>
+      <footer>Copyright &copy; 2023 Ran Elbaz</footer>
     </>
   );
 }

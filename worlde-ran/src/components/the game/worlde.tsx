@@ -75,7 +75,7 @@ const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
   return (
     <div>
       {inputs.map((inputRow, i) => (
-        <div key={i}>
+        <div key={i} className="word">
           {inputRow.map((input, j) => (
             <input
               key={j}

@@ -13,7 +13,6 @@ function App() {
         <Route path="/game" element={<Game />} />
         <Route path="/login" element={<Login />} />
       </Routes>
-      <footer>Copyright &copy; 2023 Ran Elbaz</footer>
     </>
   );
 }

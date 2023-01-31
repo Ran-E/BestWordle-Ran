@@ -1,13 +1,10 @@
-body {
-  background-color: white;
-}
-footer {
-  display: block;
+.footerGame {
+  display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
 
   font-family: "Tangerine", serif;
   font-size: 30px;
-  margin-top: 1000vh;
+  height: 60vh;
 }
