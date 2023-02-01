@@ -36,11 +36,6 @@ const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
     });
     setInputs(updatedInputs);
 
-    const currentWord = inputs[row].join("");
-    if (currentWord === word) {
-      // stop here if the entire word is green
-      return;
-    }
 
     if (col === numberOfInputs - 1) {
       setCurrentRow(row + 1);
@@ -69,6 +64,7 @@ const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
     });
     setColor(updatedColor);
 
+    
     document
       .getElementsByTagName("input")[row * numberOfInputs + col + 1].focus();
   };
@@ -113,9 +109,13 @@ const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
     });
     setColor(updatedColor);
 
+    
     document
       .getElementsByTagName("input")[currentRow * numberOfInputs + currentCol + 1].focus();
   };
+
+  
+ 
 
   return (
     <div>
