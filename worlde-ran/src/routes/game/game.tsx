@@ -2,6 +2,7 @@ import "./game.scss";
 
 import Worlde from "../../components/the game/worlde";
 import Navbar from "../../containers/Header/header";
+import Keyboard from "../../containers/keyboard/keyboard";
 
 export default function Game() {
   return (

@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 
-import "./App.scss";
-import Login from "./containers/loginModal/loginModal";
 import Game from "./routes/game/game";
 import Main from "./routes/root/Main";
+import "./App.scss";
+import Login from "./containers/loginModal/loginModal";
 
 function App() {
   return (
