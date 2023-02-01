@@ -1,8 +1,8 @@
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import { useNavigate } from "react-router-dom";
 import "./Main.scss";
-import { useState } from "react";
 
 import LoginM from "../../containers/loginModal/loginModal";
 
