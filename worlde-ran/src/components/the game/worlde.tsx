@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
+
 import Keyboard from "../../containers/keyboard/keyboard";
 import "./wordle.scss";
 
@@ -69,8 +70,7 @@ const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
     setColor(updatedColor);
 
     document
-      .getElementsByTagName("input")
-      [row * numberOfInputs + col + 1].focus();
+      .getElementsByTagName("input")[row * numberOfInputs + col + 1].focus();
   };
   const handleClick = (letter: string) => {
     const updatedInputs = inputs.map((inputRow, i) => {
@@ -114,8 +114,7 @@ const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
     setColor(updatedColor);
 
     document
-      .getElementsByTagName("input")
-      [currentRow * numberOfInputs + currentCol + 1].focus();
+      .getElementsByTagName("input")[currentRow * numberOfInputs + currentCol + 1].focus();
   };
 
   return (
