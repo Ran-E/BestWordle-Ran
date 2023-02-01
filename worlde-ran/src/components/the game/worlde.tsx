@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
+import Keyboard from "../../containers/keyboard/keyboard";
 import "./wordle.scss";
 
 interface Props {
@@ -71,6 +72,51 @@ const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
       .getElementsByTagName("input")
       [row * numberOfInputs + col + 1].focus();
   };
+  const handleClick = (letter: string) => {
+    const updatedInputs = inputs.map((inputRow, i) => {
+      if (i === currentRow) {
+        return inputRow.map((input, j) => {
+          if (j === currentCol) {
+            return letter;
+          }
+          return input;
+        });
+      }
+      return inputRow;
+    });
+    setInputs(updatedInputs);
+
+    if (currentRow === numberOfInputs - 1) {
+      setCurrentRow(currentRow + 1);
+      setCurrentCol(0);
+    } else {
+      setCurrentRow(currentRow);
+      setCurrentCol(currentCol + 1);
+    }
+
+    const updatedColor = color.map((colorRow, i) => {
+      if (i === currentRow) {
+        return colorRow.map((color, j) => {
+          if (j === currentCol) {
+            if (word.includes(letter)) {
+              if (word[j] === letter) {
+                return "green";
+              }
+              return "brown";
+            }
+            return "white";
+          }
+          return color;
+        });
+      }
+      return colorRow;
+    });
+    setColor(updatedColor);
+
+    document
+      .getElementsByTagName("input")
+      [currentRow * numberOfInputs + currentCol + 1].focus();
+  };
 
   return (
     <div>
@@ -88,6 +134,7 @@ const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
           ))}
         </div>
       ))}
+      <Keyboard onClick={handleClick} />
     </div>
   );
 };

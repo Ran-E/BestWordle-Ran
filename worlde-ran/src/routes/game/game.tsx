@@ -10,7 +10,6 @@ export default function Game() {
       <div>
         <Navbar />
         <Worlde word={"hello"} numberOfLines={5} numberOfInputs={5} />
-        <Keyboard />
       </div>
       <footer className="footerGame">Copyright &copy; 2023 Ran Elbaz</footer>
     </>
