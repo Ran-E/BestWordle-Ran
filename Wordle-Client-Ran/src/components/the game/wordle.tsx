@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect,useRef, useState } from "react";
 
 import Keyboard from "../../containers/keyboard/keyboard";
 import "./wordle.scss";
@@ -9,25 +9,37 @@ interface Props {
   numberOfInputs: number;
 }
 
+
 const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
   const [inputs, setInputs] = useState<string[][]>(
     Array(numberOfLines)
       .fill(null)
       .map(() => Array(numberOfInputs).fill(""))
   );
+
+  const fullWord = useRef("");
+
   const [currentRow, setCurrentRow] = useState(0);
   const [currentCol, setCurrentCol] = useState(0);
+
+
   const [color, setColor] = useState<string[][]>(
     Array(numberOfLines)
       .fill(null)
       .map(() => Array(numberOfInputs).fill("white"))
   );
+ 
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement>,
     row: number,
     col: number
   ) => {
+
+    // Limit the input to only English letters
+    if (!/^[a-zA-Z]+$/.test(e.target.value)) {
+      return;
+    }
     const updatedInputs = inputs.map((inputRow, i) => {
       if (i === row) {
         return inputRow.map((input, j) => (j === col ? e.target.value : input));
@@ -36,13 +48,12 @@ const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
     });
     setInputs(updatedInputs);
 
-
     if (col === numberOfInputs - 1) {
       setCurrentRow(row + 1);
       setCurrentCol(0);
     } else {
       setCurrentRow(row);
-      setCurrentCol(col + 1);
+      setCurrentCol(col+1);
     }
 
     const updatedColor = color.map((colorRow, i) => {
@@ -64,10 +75,26 @@ const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
     });
     setColor(updatedColor);
 
-    
-    document
-      .getElementsByTagName("input")[row * numberOfInputs + col + 1].focus();
-  };
+    if(fullWord.current.length < word.length)
+    {fullWord.current = fullWord.current + e.target.value;
+      document
+      .getElementsByTagName("input")[row * numberOfInputs + col + 1].focus(); 
+
+    } 
+    else if (fullWord.current.length === word.length) {
+      if (fullWord.current == word) {
+        alert("Success!");
+        fullWord.current="";
+        document
+        .getElementsByTagName("input")[row * numberOfInputs + col].focus(); 
+      } else {
+        fullWord.current="";
+        alert("Fail!");
+
+      }
+    }
+
+}
   const handleClick = (letter: string) => {
     const updatedInputs = inputs.map((inputRow, i) => {
       if (i === currentRow) {
@@ -109,14 +136,11 @@ const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
     });
     setColor(updatedColor);
 
-    
     document
       .getElementsByTagName("input")[currentRow * numberOfInputs + currentCol + 1].focus();
   };
-
   
- 
-
+  
   return (
     <div>
       {inputs.map((inputRow, i) => (
