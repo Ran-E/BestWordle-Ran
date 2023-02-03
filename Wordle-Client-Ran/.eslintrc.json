@@ -8,7 +8,8 @@
     "react-hooks",
     "@typescript-eslint",
     "eslint-plugin-import-helpers",
-    "jest"
+    "jest",
+    "import"
   ],
   "extends": [
     "plugin:react/recommended",
@@ -54,13 +55,12 @@
         "allowExpressions": true
       }
     ],
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "ts": "never",
-        "tsx": "never"
-      }
+    "import/extensions": ["error", "always", {
+      "js": "never",
+      "jsx": "never",
+      "ts": "never",
+      "tsx": "never"
+    }
     ],
     "import-helpers/order-imports": [
       "warn",

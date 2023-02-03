@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect,useRef, useState } from "react";
+import React, { ChangeEvent,useRef, useState } from "react";
 
 import Keyboard from "../../containers/keyboard/keyboard";
 import "./wordle.scss";
@@ -36,10 +36,8 @@ const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
     col: number
   ) => {
 
-    // Limit the input to only English letters
-    if (!/^[a-zA-Z]+$/.test(e.target.value)) {
-      return;
-    }
+        if (!/^[a-zA-Z]+$/.test(e.target.value)) return;
+
     const updatedInputs = inputs.map((inputRow, i) => {
       if (i === row) {
         return inputRow.map((input, j) => (j === col ? e.target.value : input));
@@ -90,7 +88,8 @@ const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
       } else {
         fullWord.current="";
         alert("Fail!");
-
+        document
+        .getElementsByTagName("input")[row * numberOfInputs + col + 1].focus(); 
       }
     }
 
