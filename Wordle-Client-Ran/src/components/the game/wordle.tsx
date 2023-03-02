@@ -1,164 +1,99 @@
-import React, { ChangeEvent,useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 
-import Keyboard from "../../containers/keyboard/keyboard";
-import "./wordle.scss";
+import './wordle.scss';
 
-interface Props {
-  word: string;
-  numberOfLines: number;
+interface WordleProps {
   numberOfInputs: number;
+  numberOfLines: number;
+  word: string;
 }
 
+export default function Wordle({ numberOfInputs, numberOfLines, word}: WordleProps) {
+  const [inputValues, setInputValues] = useState<string[][]>        
+    (Array(numberOfLines)
+      .fill(Array(numberOfInputs)
+      .fill('')));
 
-const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
-  const [inputs, setInputs] = useState<string[][]>(
-    Array(numberOfLines)
-      .fill(null)
-      .map(() => Array(numberOfInputs).fill(""))
-  );
+  const [inputColors, setInputColors] = useState<string[][]>([]); // new state variable
 
-  const fullWord = useRef("");
+  const inputRefs = useRef<HTMLInputElement[][]>(Array.from({ length: numberOfLines }, () =>  
+    Array.from({ length: numberOfInputs })));
 
-  const [currentRow, setCurrentRow] = useState(0);
-  const [currentCol, setCurrentCol] = useState(0);
+  useEffect(() => {
+    inputRefs.current[0][0]?.focus();
+  }, []);
 
+  const handleInputChange = (lineIndex: number, inputIndex: number, value: string) => {
+    const lettersOnly = value.replace(/[^a-zA-Z]/g, '');
+    const newInputValues = inputValues.map((line, i) => i === lineIndex ? [...line] : line);
+    newInputValues[lineIndex][inputIndex] = lettersOnly.toUpperCase();
+    setInputValues(newInputValues);
 
-  const [color, setColor] = useState<string[][]>(
-    Array(numberOfLines)
-      .fill(null)
-      .map(() => Array(numberOfInputs).fill("white"))
-  );
- 
+  // Focus on the next input
+  const nextIndex = inputIndex + 1;
+  if (nextIndex < numberOfInputs && lettersOnly != '') {
+    inputRefs.current[lineIndex][nextIndex]?.focus();
+  } else if(lettersOnly != '' && newInputValues[lineIndex].join('') === word.toUpperCase()){
+    setTimeout(() => {
+      alert('success');
+    }, 1)
+    } else if (lineIndex + 1 < numberOfLines && lettersOnly != '') {
+      setTimeout(() => {
+        alert('fail');
+      }, 1)
+     ,      setTimeout(() => {
+      inputRefs.current[lineIndex + 1][0]?.focus();
+    }, 2);
+  }
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement>,
-    row: number,
-    col: number
-  ) => {
-
-        if (!/^[a-zA-Z]+$/.test(e.target.value)) return;
-
-    const updatedInputs = inputs.map((inputRow, i) => {
-      if (i === row) {
-        return inputRow.map((input, j) => (j === col ? e.target.value : input));
-      }
-      return inputRow;
-    });
-    setInputs(updatedInputs);
-
-    if (col === numberOfInputs - 1) {
-      setCurrentRow(row + 1);
-      setCurrentCol(0);
-    } else {
-      setCurrentRow(row);
-      setCurrentCol(col+1);
-    }
-
-    const updatedColor = color.map((colorRow, i) => {
-      if (i === row) {
-        return colorRow.map((color, j) => {
-          if (j === col) {
-            if (word.includes(e.target.value)) {
-              if (word[j] === e.target.value) {
-                return "green";
-              }
-              return "brown";
-            }
-            return "white";
-          }
-          return color;
-        });
-      }
-      return colorRow;
-    });
-    setColor(updatedColor);
-
-    if(fullWord.current.length < word.length)
-    {fullWord.current = fullWord.current + e.target.value;
-      document
-      .getElementsByTagName("input")[row * numberOfInputs + col + 1].focus(); 
-
-    } 
-    else if (fullWord.current.length === word.length) {
-      if (fullWord.current == word) {
-        alert("Success!");
-        fullWord.current="";
-        document
-        .getElementsByTagName("input")[row * numberOfInputs + col].focus(); 
+  // Check line result  
+  const lineWord = newInputValues[lineIndex].join('');
+  const lineLetters = lineWord.split('');
+  const wordLetters = word.toUpperCase().split('');
+  const lineResult = lineLetters.map((letter, i) => {
+    if (wordLetters.includes(letter)) {
+      if (letter === wordLetters[i]) {
+        return 'green';
       } else {
-        fullWord.current="";
-        alert("Fail!");
-        document
-        .getElementsByTagName("input")[row * numberOfInputs + col + 1].focus(); 
+        return 'brown';
       }
-    }
-
-}
-  const handleClick = (letter: string) => {
-    const updatedInputs = inputs.map((inputRow, i) => {
-      if (i === currentRow) {
-        return inputRow.map((input, j) => {
-          if (j === currentCol) {
-            return letter;
-          }
-          return input;
-        });
-      }
-      return inputRow;
-    });
-    setInputs(updatedInputs);
-
-    if (currentRow === numberOfInputs - 1) {
-      setCurrentRow(currentRow + 1);
-      setCurrentCol(0);
     } else {
-      setCurrentRow(currentRow);
-      setCurrentCol(currentCol + 1);
+      return 'red';
     }
+  });
+      // set color values for each input in the line
+      const newInputColors = [...inputColors];
+      newInputColors[lineIndex] = lineResult;
+      setInputColors(newInputColors);
 
-    const updatedColor = color.map((colorRow, i) => {
-      if (i === currentRow) {
-        return colorRow.map((color, j) => {
-          if (j === currentCol) {
-            if (word.includes(letter)) {
-              if (word[j] === letter) {
-                return "green";
-              }
-              return "brown";
-            }
-            return "white";
-          }
-          return color;
-        });
-      }
-      return colorRow;
-    });
-    setColor(updatedColor);
-
-    document
-      .getElementsByTagName("input")[currentRow * numberOfInputs + currentCol + 1].focus();
+      
   };
-  
-  
+
   return (
     <div>
-      {inputs.map((inputRow, i) => (
-        <div key={i} className="word">
-          {inputRow.map((input, j) => (
-            <input
-              key={j}
-              type="text"
-              value={input}
-              maxLength={1}
-              onChange={(e) => handleChange(e, i, j)}
-              style={{ backgroundColor: color[i][j] }}
-            />
-          ))}
+      {inputValues.map((line, lineIndex) => (
+        <div key={lineIndex} className="word">
+          {line.map((value, inputIndex) => {
+            const color = inputColors[lineIndex]?.[inputIndex];
+            return (
+              <input
+                key={inputIndex}
+                type="text"
+                maxLength={1}
+                value={value}
+                ref={(input) => (inputRefs.current[lineIndex][inputIndex] = input!)}
+                onChange={(event) =>
+                  handleInputChange(lineIndex, inputIndex, event.target.value)
+                }
+                onFocus={() => inputRefs.current[lineIndex][inputIndex]!.select()}
+                style={{ backgroundColor: color }}
+              />
+              
+            );
+          })}
+          <br />
         </div>
       ))}
-      <Keyboard onClick={handleClick} />
     </div>
-  );
-};
-
-export default Wordle;
+  )}
+  

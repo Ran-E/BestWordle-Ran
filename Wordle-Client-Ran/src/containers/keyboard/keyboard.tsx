@@ -6,45 +6,31 @@ interface Props {
 }
 
 const Keyboard = ({ onClick }: Props) => {
-  const firstRow = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"];
-  const secondRow = ["a", "s", "d", "f", "g", "h", "j", "k", "l"];
-  const thirdRow = ["z", "x", "c", "v", "b", "n", "m"];
+  const keyboardLayout = [
+    ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+    ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+    ["z", "x", "c", "v", "b", "n", "m"],
+  ];
+
+  const handleKeyPress = (letter: string) => {
+    onClick(letter);
+  };
 
   return (
-    <div>
-      <div className="letters">
-        {firstRow.map((letter) => (
-          <button
-            className="button"
-            key={letter}
-            onClick={() => onClick(letter)}
-          >
-            {letter}
-          </button>
-        ))}
-      </div>
-      <div className="letters">
-        {secondRow.map((letter) => (
-          <button
-            className="button"
-            key={letter}
-            onClick={() => onClick(letter)}
-          >
-            {letter}
-          </button>
-        ))}
-      </div>
-      <div className="letters">
-        {thirdRow.map((letter) => (
-          <button
-            className="button"
-            key={letter}
-            onClick={() => onClick(letter)}
-          >
-            {letter}
-          </button>
-        ))}
-      </div>
+    <div className="keyboard">
+      {keyboardLayout.map((row, i) => (
+        <div key={i} className="keyboard__row">
+          {row.map((letter, j) => (
+            <button
+              key={j}
+              className="keyboard__button"
+              onClick={() => handleKeyPress(letter)}
+            >
+              {letter}
+            </button>
+          ))}
+        </div>
+      ))}
     </div>
   );
 };
