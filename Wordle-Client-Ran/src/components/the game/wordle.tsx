@@ -35,15 +35,19 @@ export default function Wordle({ numberOfInputs, numberOfLines, word}: WordlePro
     inputRefs.current[lineIndex][nextIndex]?.focus();
   } else if(lettersOnly != '' && newInputValues[lineIndex].join('') === word.toUpperCase()){
     setTimeout(() => {
-      alert('success');
-    }, 1)
+      alert('Well Done!\nYou succeeded!');
+    }, 1), inputRefs.current[lineIndex][inputIndex]?.blur();
     } else if (lineIndex + 1 < numberOfLines && lettersOnly != '') {
       setTimeout(() => {
-        alert('fail');
+        alert('Not terrible!\nTry again.');
       }, 1)
      ,      setTimeout(() => {
       inputRefs.current[lineIndex + 1][0]?.focus();
     }, 2);
+  } else if (lettersOnly != '' && newInputValues[lineIndex].join('') != word.toUpperCase()) {
+    setTimeout(() => {
+      alert('Next time you will do better!');
+    }, 1),inputRefs.current[lineIndex][inputIndex]?.blur();
   }
 
   // Check line result  
