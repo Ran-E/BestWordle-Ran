@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Keyboard from '../../containers/keyboard/keyboard';
 
 import './wordle.scss';
 
@@ -8,13 +9,19 @@ interface WordleProps {
   word: string;
 }
 
+
 export default function Wordle({ numberOfInputs, numberOfLines, word}: WordleProps) {
   const [inputValues, setInputValues] = useState<string[][]>        
     (Array(numberOfLines)
       .fill(Array(numberOfInputs)
       .fill('')));
+    
+
+  const [currentLine, setCurrentLine] = useState(0);
+  const [currentCol, setCurrentCol] = useState(0);
 
   const [inputColors, setInputColors] = useState<string[][]>([]); // new state variable
+
 
   const inputRefs = useRef<HTMLInputElement[][]>(Array.from({ length: numberOfLines }, () =>  
     Array.from({ length: numberOfInputs })));
@@ -23,14 +30,28 @@ export default function Wordle({ numberOfInputs, numberOfLines, word}: WordlePro
     inputRefs.current[0][0]?.focus();
   }, []);
 
+
   const handleInputChange = (lineIndex: number, inputIndex: number, value: string) => {
     const lettersOnly = value.replace(/[^a-zA-Z]/g, '');
     const newInputValues = inputValues.map((line, i) => i === lineIndex ? [...line] : line);
     newInputValues[lineIndex][inputIndex] = lettersOnly.toUpperCase();
+    console.log(newInputValues)
+
     setInputValues(newInputValues);
+    
+    if (inputIndex === numberOfInputs - 1) {
+      setCurrentLine(lineIndex + 1);
+      setCurrentCol(0);
+    } else {
+      setCurrentLine(lineIndex);
+      setCurrentCol(inputIndex+1);
+    }
+    console.log(currentLine)
+
 
   // Focus on the next input
   const nextIndex = inputIndex + 1;
+
   if (nextIndex < numberOfInputs && lettersOnly != '') {
     inputRefs.current[lineIndex][nextIndex]?.focus();
   } else if(lettersOnly != '' && newInputValues[lineIndex].join('') === word.toUpperCase()){
@@ -71,7 +92,81 @@ export default function Wordle({ numberOfInputs, numberOfLines, word}: WordlePro
       setInputColors(newInputColors);
 
       
+  
+ 
+
   };
+
+  const handleInputClick = (letter: string) => {
+
+ 
+    const newInputValues = inputValues.map((line, i) => i === currentLine ? [...line] : line);
+    newInputValues[currentLine][currentCol] = letter;
+    console.log(newInputValues)
+    setInputValues(newInputValues)
+
+
+
+    if (currentCol === numberOfInputs - 1) {
+      setCurrentLine(currentLine + 1);
+      setCurrentCol(0);
+    } else {
+      setCurrentLine(currentLine);
+      setCurrentCol(currentCol+1);
+    }
+    console.log(currentLine)
+
+
+
+      // Focus on the next input
+  const nextIndex = currentCol + 1;
+  
+  if (nextIndex < numberOfInputs && letter != '') {
+    inputRefs.current[currentLine][nextIndex]?.focus();
+  } else if(letter != '' && newInputValues[currentLine].join('') === word.toUpperCase()){
+    setTimeout(() => {
+      alert('Well Done!\nYou succeeded!');
+    }, 1), inputRefs.current[currentLine][currentCol]?.blur();
+    } else if (currentLine + 1 < numberOfLines && letter != '') {
+      setTimeout(() => {
+        alert('Not terrible!\nTry again.');
+      }, 1)
+     ,      setTimeout(() => {
+      inputRefs.current[currentLine + 1][0]?.focus();
+    }, 2);
+  } else if (letter != '' && newInputValues[currentLine].join('') != word.toUpperCase()) {
+    setTimeout(() => {
+      alert('Next time you will do better!');
+    }, 1),inputRefs.current[currentLine][currentCol]?.blur();
+  }
+  
+    // Check line result  
+    const lineWord = newInputValues[currentLine].join('');
+    const lineLetters = lineWord.split('');
+    const wordLetters = word.toUpperCase().split('');
+    const lineResult = lineLetters.map((newLetter, i) => {
+      if (wordLetters.includes(newLetter)) {
+        if (newLetter === wordLetters[i]) {
+          return 'green';
+        } else {
+          return 'brown';
+        }
+      } else {
+        return 'red';
+      }
+    });
+        // set color values for each input in the line
+        const newInputColors = [...inputColors];
+        newInputColors[currentLine] = lineResult;
+        setInputColors(newInputColors);
+  
+  };
+
+
+  
+
+    
+
 
   return (
     <div>
@@ -86,18 +181,16 @@ export default function Wordle({ numberOfInputs, numberOfLines, word}: WordlePro
                 maxLength={1}
                 value={value}
                 ref={(input) => (inputRefs.current[lineIndex][inputIndex] = input!)}
-                onChange={(event) =>
-                  handleInputChange(lineIndex, inputIndex, event.target.value)
-                }
+                onChange={(event) => handleInputChange(lineIndex, inputIndex, event.target.value)}
                 onFocus={() => inputRefs.current[lineIndex][inputIndex]!.select()}
                 style={{ backgroundColor: color }}
               />
-              
             );
           })}
           <br />
         </div>
       ))}
+      <Keyboard onClick={(letter)=>handleInputClick(letter)}/>
     </div>
   )}
   

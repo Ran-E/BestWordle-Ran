@@ -1,6 +1,6 @@
 import React, { ChangeEvent,useRef, useState } from "react";
-
 // import Keyboard from "../../containers/keyboard/keyboard";
+
 // import "./wordle.scss";
 
 // interface Props {
@@ -13,9 +13,8 @@ import React, { ChangeEvent,useRef, useState } from "react";
 // const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
 //   const [inputs, setInputs] = useState<string[][]>(
 //     Array(numberOfLines)
-//       .fill(null)
-//       .map(() => Array(numberOfInputs).fill(""))
-//   );
+//     .fill(Array(numberOfInputs)
+//     .fill('')));
 
 //   const fullWord = useRef("");
 
