@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./keyboard.scss";
 
 interface Props {
@@ -12,7 +12,7 @@ interface PreviousLetter {
 }
 
 const Keyboard = ({ onClick, backgroundColor }: Props) => {
-  const keyboardLayout = [  
+  const keyboardLayout = [
     ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
     ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
     ["Z", "X", "C", "V", "B", "N", "M"]
@@ -34,6 +34,19 @@ const Keyboard = ({ onClick, backgroundColor }: Props) => {
       return match ? { backgroundColor: match.backgroundColor } : {};
     }
   };
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    const key = event.key.toUpperCase();
+    if (keyboardLayout.flat().includes(key)) {
+      event.preventDefault();
+      handleKeyPress(key);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [currentLetter]);
 
   return (
     <div className="keyboard">
