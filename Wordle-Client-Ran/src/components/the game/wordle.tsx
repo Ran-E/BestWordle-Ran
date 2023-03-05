@@ -21,6 +21,8 @@ export default function Wordle({ numberOfInputs, numberOfLines, word}: WordlePro
   const [currentCol, setCurrentCol] = useState(0);
 
   const [inputColors, setInputColors] = useState<string[][]>([]); // new state variable
+  const [letterColors, setLetterColors] = useState('white'); // new state variable
+
 
 
   const inputRefs = useRef<HTMLInputElement[][]>(Array.from({ length: numberOfLines }, () =>  
@@ -35,7 +37,6 @@ export default function Wordle({ numberOfInputs, numberOfLines, word}: WordlePro
     const lettersOnly = value.replace(/[^a-zA-Z]/g, '');
     const newInputValues = inputValues.map((line, i) => i === lineIndex ? [...line] : line);
     newInputValues[lineIndex][inputIndex] = lettersOnly.toUpperCase();
-    console.log(newInputValues)
 
     setInputValues(newInputValues);
     
@@ -114,7 +115,6 @@ export default function Wordle({ numberOfInputs, numberOfLines, word}: WordlePro
       setCurrentLine(currentLine);
       setCurrentCol(currentCol+1);
     }
-    console.log(currentLine)
 
 
 
@@ -159,6 +159,8 @@ export default function Wordle({ numberOfInputs, numberOfLines, word}: WordlePro
         const newInputColors = [...inputColors];
         newInputColors[currentLine] = lineResult;
         setInputColors(newInputColors);
+
+        setLetterColors(newInputColors[currentLine][currentCol])
   
   };
 
@@ -190,7 +192,7 @@ export default function Wordle({ numberOfInputs, numberOfLines, word}: WordlePro
           <br />
         </div>
       ))}
-      <Keyboard onClick={(letter)=>handleInputClick(letter)}/>
+      <Keyboard onClick={(letter) => handleInputClick(letter)} backgroundColor={letterColors}    />
     </div>
   )}
   

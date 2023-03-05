@@ -11,10 +11,11 @@ import React, { ChangeEvent,useRef, useState } from "react";
 
 
 // const Wordle = ({ word, numberOfLines, numberOfInputs }: Props) => {
-//   const [inputs, setInputs] = useState<string[][]>(
-//     Array(numberOfLines)
-//     .fill(Array(numberOfInputs)
-//     .fill('')));
+  // const [inputs, setInputs] = useState<string[][]>(
+    //     Array(numberOfLines)
+    //       .fill(null)
+    //       .map(() => Array(numberOfInputs).fill(""))
+    //   );
 
 //   const fullWord = useRef("");
 

@@ -1,19 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import "./keyboard.scss";
 
 interface Props {
   onClick: (letter: string) => void;
+  backgroundColor: string;
 }
 
-const Keyboard = ({ onClick }: Props) => {
+interface PreviousLetter {
+  letter: string;
+  backgroundColor: string;
+}
+
+const Keyboard = ({ onClick, backgroundColor }: Props) => {
   const keyboardLayout = [  
     ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
     ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
     ["Z", "X", "C", "V", "B", "N", "M"]
   ];
+  const [currentLetter, setCurrentLetter] = useState("");
+  const [previousLetters, setPreviousLetters] = useState<PreviousLetter[]>([]);
 
   const handleKeyPress = (letter: string) => {
+    setPreviousLetters([...previousLetters, { letter: currentLetter, backgroundColor }]);
+    setCurrentLetter(letter);
     onClick(letter);
+  };
+
+  const getButtonStyle = (letter: string) => {
+    if (letter === currentLetter) {
+      return { backgroundColor };
+    } else {
+      const match = previousLetters.find(({ letter: prevLetter }) => prevLetter === letter);
+      return match ? { backgroundColor: match.backgroundColor } : {};
+    }
   };
 
   return (
@@ -24,6 +43,7 @@ const Keyboard = ({ onClick }: Props) => {
             <button
               key={j}
               className="keyboard__button"
+              style={getButtonStyle(letter)}
               onClick={() => handleKeyPress(letter)}
             >
               {letter}
