@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import "./keyboard.scss";
 
 interface Props {
@@ -12,58 +12,63 @@ interface PreviousLetter {
 }
 
 const Keyboard = ({ onClick, backgroundColor }: Props) => {
-  const keyboardLayout = [
+  const keyboardLayout = useMemo(() => [
     ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
     ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
     ["Z", "X", "C", "V", "B", "N", "M"]
-  ];
-  const [currentLetter, setCurrentLetter] = useState("");
-  const [previousLetters, setPreviousLetters] = useState<PreviousLetter[]>([]);
+  ], []);
 
-  const handleKeyPress = (letter: string) => {
-    setPreviousLetters([...previousLetters, { letter: currentLetter, backgroundColor }]);
+  const [previousLetters, setPreviousLetters] = useState<PreviousLetter[]>([]);
+  const [currentLetter, setCurrentLetter] = useState<string>("");
+
+  const handleKeyPress = useCallback((letter: string) => {
+    setPreviousLetters(prevLetters => [...prevLetters, { letter: currentLetter, backgroundColor }]);
     setCurrentLetter(letter);
     onClick(letter);
-  };
+  }, [backgroundColor, currentLetter, onClick]);
 
-  const getButtonStyle = (letter: string) => {
+  const getButtonStyle = useCallback((letter: string) => {
     if (letter === currentLetter) {
       return { backgroundColor };
     } else {
       const match = previousLetters.find(({ letter: prevLetter }) => prevLetter === letter);
       return match ? { backgroundColor: match.backgroundColor } : {};
     }
-  };
-
-  const handleKeyDown = (event: KeyboardEvent) => {
-    const key = event.key.toUpperCase();
-    if (keyboardLayout.flat().includes(key)) {
-      event.preventDefault();
-      handleKeyPress(key);
-    }
-  };
+  }, [backgroundColor, currentLetter, previousLetters]);
 
   useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const key = event.key.toUpperCase();
+      if (keyboardLayout.flat().includes(key)) {
+        event.preventDefault();
+        handleKeyPress(key);
+      }
+    };
+
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [currentLetter]);
+  }, [keyboardLayout, handleKeyPress]);
+
+  const renderButton = (letter: string, index: number) => (
+    <button
+      key={index}
+      className="keyboard__button"
+      style={getButtonStyle(letter)}
+      onClick={() => handleKeyPress(letter)}
+    >
+      {letter}
+    </button>
+  );
+
+  const renderRow = (row: string[], index: number) => (
+    <div key={index} className="keyboard__row">
+      {row.map(renderButton)}
+    </div>
+  );
 
   return (
     <div className="keyboard">
-      {keyboardLayout.map((row, i) => (
-        <div key={i} className="keyboard__row">
-          {row.map((letter, j) => (
-            <button
-              key={j}
-              className="keyboard__button"
-              style={getButtonStyle(letter)}
-              onClick={() => handleKeyPress(letter)}
-            >
-              {letter}
-            </button>
-          ))}
-        </div>
-      ))}
+      {keyboardLayout.map(renderRow)}
     </div>
   );
 };

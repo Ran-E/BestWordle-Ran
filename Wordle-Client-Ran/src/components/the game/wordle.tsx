@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 import Keyboard from '../../containers/keyboard/keyboard';
 
 import './wordle.scss';
@@ -9,21 +10,17 @@ interface WordleProps {
   word: string;
 }
 
-
-export default function Wordle({ numberOfInputs, numberOfLines, word}: WordleProps) {
+export default function Wordle({ numberOfInputs=5, numberOfLines=3, word}: WordleProps) {
   const [inputValues, setInputValues] = useState<string[][]>        
     (Array(numberOfLines)
       .fill(Array(numberOfInputs)
       .fill('')));
     
-
   const [currentLine, setCurrentLine] = useState(0);
   const [currentCol, setCurrentCol] = useState(0);
 
   const [inputColors, setInputColors] = useState<string[][]>([]); // new state variable
   const [letterColors, setLetterColors] = useState('white'); // new state variable
-
-
 
   const inputRefs = useRef<HTMLInputElement[][]>(Array.from({ length: numberOfLines }, () =>  
     Array.from({ length: numberOfInputs })));
@@ -31,7 +28,6 @@ export default function Wordle({ numberOfInputs, numberOfLines, word}: WordlePro
   useEffect(() => {
     inputRefs.current[0][0]?.focus();
   }, []);
-
 
   const handleInputChange = (lineIndex: number, inputIndex: number, value: string) => {
     const lettersOnly = value.replace(/[^a-zA-Z]/g, '');
@@ -47,8 +43,6 @@ export default function Wordle({ numberOfInputs, numberOfLines, word}: WordlePro
       setCurrentLine(lineIndex);
       setCurrentCol(inputIndex+1);
     }
-    console.log(currentLine)
-
 
   // Focus on the next input
   const nextIndex = inputIndex + 1;
@@ -92,10 +86,6 @@ export default function Wordle({ numberOfInputs, numberOfLines, word}: WordlePro
       newInputColors[lineIndex] = lineResult;
       setInputColors(newInputColors);
 
-      
-  
- 
-
   };
 
   const handleInputClick = (letter: string) => {
@@ -103,7 +93,6 @@ export default function Wordle({ numberOfInputs, numberOfLines, word}: WordlePro
  
     const newInputValues = inputValues.map((line, i) => i === currentLine ? [...line] : line);
     newInputValues[currentLine][currentCol] = letter;
-    console.log(newInputValues)
     setInputValues(newInputValues)
 
 
@@ -115,8 +104,6 @@ export default function Wordle({ numberOfInputs, numberOfLines, word}: WordlePro
       setCurrentLine(currentLine);
       setCurrentCol(currentCol+1);
     }
-
-
 
       // Focus on the next input
   const nextIndex = currentCol + 1;
@@ -163,12 +150,6 @@ export default function Wordle({ numberOfInputs, numberOfLines, word}: WordlePro
         setLetterColors(newInputColors[currentLine][currentCol])
   
   };
-
-
-  
-
-    
-
 
   return (
     <div>
