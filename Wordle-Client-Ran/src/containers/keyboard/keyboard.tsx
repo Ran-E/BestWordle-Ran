@@ -11,30 +11,44 @@ interface PreviousLetter {
   backgroundColor: string;
 }
 
-const Keyboard = ({ onClick, backgroundColor }: Props) => {
-  const keyboardLayout = useMemo(() => [
-    ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-    ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-    ["Z", "X", "C", "V", "B", "N", "M"]
-  ], []);
+function Keyboard({ onClick, backgroundColor }: Props) {
+  const keyboardLayout = useMemo(
+    () => [
+      ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+      ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+      ["Z", "X", "C", "V", "B", "N", "M"],
+    ],
+    []
+  );
 
   const [previousLetters, setPreviousLetters] = useState<PreviousLetter[]>([]);
   const [currentLetter, setCurrentLetter] = useState<string>("");
 
-  const handleKeyPress = useCallback((letter: string) => {
-    setPreviousLetters(prevLetters => [...prevLetters, { letter: currentLetter, backgroundColor }]);
-    setCurrentLetter(letter);
-    onClick(letter);
-  }, [backgroundColor, currentLetter, onClick]);
+  const handleKeyPress = useCallback(
+    (letter: string) => {
+      setPreviousLetters((prevLetters) => [
+        ...prevLetters,
+        { letter: currentLetter, backgroundColor },
+      ]);
+      setCurrentLetter(letter);
+      onClick(letter);
+    },
+    [backgroundColor, currentLetter, onClick]
+  );
 
-  const getButtonStyle = useCallback((letter: string) => {
-    if (letter === currentLetter) {
-      return { backgroundColor };
-    } else {
-      const match = previousLetters.find(({ letter: prevLetter }) => prevLetter === letter);
-      return match ? { backgroundColor: match.backgroundColor } : {};
-    }
-  }, [backgroundColor, currentLetter, previousLetters]);
+  const getButtonStyle = useCallback(
+    (letter: string) => {
+      if (letter === currentLetter) {
+        return { backgroundColor };
+      } else {
+        const match = previousLetters.find(
+          ({ letter: prevLetter }) => prevLetter === letter
+        );
+        return match ? { backgroundColor: match.backgroundColor } : {};
+      }
+    },
+    [backgroundColor, currentLetter, previousLetters]
+  );
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -66,11 +80,7 @@ const Keyboard = ({ onClick, backgroundColor }: Props) => {
     </div>
   );
 
-  return (
-    <div className="keyboard">
-      {keyboardLayout.map(renderRow)}
-    </div>
-  );
-};
+  return <div className="keyboard">{keyboardLayout.map(renderRow)}</div>;
+}
 
 export default Keyboard;
