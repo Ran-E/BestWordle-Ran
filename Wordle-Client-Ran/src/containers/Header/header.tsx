@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Button, Nav } from "react-bootstrap";
+import { Button, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import Help from "../Help/Help";
 
-import "./headers.css";
+import "./headers.scss";
 
 const Header = () => {
   const [off, setOff] = useState(true);
@@ -15,34 +15,25 @@ const Header = () => {
   const email = localStorage.getItem("email");
 
   return (
-    <header className="p-1 mb-3 border-bottom-0">
-      <div>
-        <div>
-          <Link to="/" className="text-white  text-decoration-none">
-            Home
-          </Link>
-
-          <Nav className="text-white">
-            <Nav.Item id="h1">Welcome, {email ? email : "Guest"}!</Nav.Item>
-            <div>
-              {email ? (
-                <Button
-                  variant="#0038b8"
-                  className="text-white"
-                  onClick={logOut}
-                >
-                  Logout
-                </Button>
-              ) : (
-                ""
-              )}
-            </div>
-            <Nav.Item>
-              <Help />
-            </Nav.Item>
-          </Nav>
-        </div>
-      </div>
+    <header>
+      <Nav className="text-white ml-auto align-items-center">
+        <Navbar.Brand href="/" className="left brand text-white">
+          Home
+        </Navbar.Brand>
+        <Nav.Item className="left">
+          Welcome, {email ? email : "Guest"}!
+        </Nav.Item>
+        {email ? (
+          <Button variant="#0038b8" className="text-white" onClick={logOut}>
+            Logout
+          </Button>
+        ) : (
+          ""
+        )}
+        <Nav.Item className="help">
+          <Help />
+        </Nav.Item>
+      </Nav>
     </header>
   );
 };

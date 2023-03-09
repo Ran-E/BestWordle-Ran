@@ -1,0 +1,33 @@
+header {
+  display: flex;
+  align-items: center;
+  background-color: #0038b8;
+  color: white;
+  padding: 0.25rem;
+  border-bottom: 1px solid white;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+
+  .left{
+    display: flex;
+    justify-content: flex-start;
+  }
+
+
+  .brand {
+    padding-inline: 1em;
+  }
+
+
+
+  .nav-item {
+      margin: 0;
+      padding: 0;
+    }
+
+  .help{
+    justify-self:flex-end;
+  }
+
+
+}
