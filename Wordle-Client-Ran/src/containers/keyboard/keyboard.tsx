@@ -50,20 +50,13 @@ function Keyboard({ onClick, backgroundColor }: Props) {
     [backgroundColor, currentLetter, previousLetters]
   );
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      const key = event.key.toUpperCase();
-      if (keyboardLayout.flat().includes(key)) {
-        if (event.ctrlKey) {
-          event.preventDefault();
-        }
-        handleKeyPress(key);
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [keyboardLayout, handleKeyPress]);
+  const handleKeyDown = (event: KeyboardEvent) => {
+    const key = event.key.toUpperCase();
+    if (keyboardLayout.flat().includes(key)) {
+      event.preventDefault();
+      handleKeyPress(key);
+    }
+  };
 
   const renderButton = (letter: string, index: number) => (
     <button
