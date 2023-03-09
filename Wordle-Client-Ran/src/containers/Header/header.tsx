@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Button, Nav, Navbar, NavItem, NavLink } from "react-bootstrap";
+import { Button, Nav, Navbar, NavLink } from "react-bootstrap";
 
 import Help from "../Help/Help";
 
 import "./headers.scss";
-import { Link } from "react-router-dom";
 
 const Header = () => {
   const [, setOff] = useState(true);
