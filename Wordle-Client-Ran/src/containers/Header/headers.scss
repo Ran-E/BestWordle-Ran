@@ -1,4 +1,4 @@
-header {
+.Navbar {
   display: flex;
   align-items: center;
   background-color: #0038b8;
@@ -8,26 +8,14 @@ header {
   margin-bottom: 1rem;
   justify-content: space-between;
 
-  .left{
-    display: flex;
-    justify-content: flex-start;
+  
+  .general{
+  margin: 0;
+  padding: 0;
+  background-color: #0038b8;
+
   }
 
-
-  .brand {
-    padding-inline: 1em;
-  }
-
-
-
-  .nav-item {
-      margin: 0;
-      padding: 0;
-    }
-
-  .help{
-    justify-self:flex-end;
-  }
 
 
 }

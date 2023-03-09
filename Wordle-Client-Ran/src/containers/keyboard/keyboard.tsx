@@ -54,7 +54,9 @@ function Keyboard({ onClick, backgroundColor }: Props) {
     const handleKeyDown = (event: KeyboardEvent) => {
       const key = event.key.toUpperCase();
       if (keyboardLayout.flat().includes(key)) {
-        event.preventDefault();
+        if (event.ctrlKey) {
+          event.preventDefault();
+        }
         handleKeyPress(key);
       }
     };

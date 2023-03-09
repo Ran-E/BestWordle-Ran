@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Button, Nav, Navbar } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Button, Nav, Navbar, NavItem, NavLink } from "react-bootstrap";
 
 import Help from "../Help/Help";
 
 import "./headers.scss";
+import { Link } from "react-router-dom";
 
 const Header = () => {
-  const [off, setOff] = useState(true);
+  const [, setOff] = useState(true);
   const logOut = () => {
     localStorage.clear();
     setOff((current) => !current);
@@ -15,26 +15,31 @@ const Header = () => {
   const email = localStorage.getItem("email");
 
   return (
-    <header>
-      <Nav className="text-white ml-auto align-items-center">
-        <Navbar.Brand href="/" className="left brand text-white">
-          Home
-        </Navbar.Brand>
-        <Nav.Item className="left">
-          Welcome, {email ? email : "Guest"}!
-        </Nav.Item>
-        {email ? (
-          <Button variant="#0038b8" className="text-white" onClick={logOut}>
-            Logout
-          </Button>
-        ) : (
-          ""
-        )}
-        <Nav.Item className="help">
-          <Help />
-        </Nav.Item>
-      </Nav>
-    </header>
+    <Navbar
+      sticky="top"
+      className="Navbar text-white ml-auto align-items-center"
+    >
+      <NavLink href="/" className="general brand text-white">
+        Home
+      </NavLink>
+      <Nav.Item className="general">
+        Welcome, {email ? email : "Guest"}!
+      </Nav.Item>
+      {email ? (
+        <Button
+          variant="#0038b8"
+          className="general text-white"
+          onClick={logOut}
+        >
+          Logout
+        </Button>
+      ) : (
+        ""
+      )}
+      <Button className="general">
+        <Help />
+      </Button>
+    </Navbar>
   );
 };
 
